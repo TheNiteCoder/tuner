@@ -14,6 +14,8 @@ public class Tuner.Window : Gtk.ApplicationWindow {
     private DirectoryController _directory;
     private HeaderBar headerbar;
     private Granite.Widgets.SourceList source_list;
+    // TODO this is deprecated as Gtk no longer supports the system tray
+    private Gtk.StatusIcon status_icon;
     
     public const string WindowName = "Tuner";
     public const string ACTION_PREFIX = "win.";
@@ -359,6 +361,14 @@ public class Tuner.Window : Gtk.ApplicationWindow {
             }
 
         }
+
+        // System Tray Icon
+        status_icon = new Gtk.StatusIcon.from_icon_name("internet-radio-symbolic");
+        status_icon.set_visible(true);
+
+        status_icon.activate.connect(() => {
+            this.visible = !this.visible;
+        });
     }
 
     private ContentBox create_content_box (
